@@ -2,9 +2,9 @@
 /*
 Plugin Name: Monero - WooCommerce Gateway
 Plugin URI: https://monerointegrations.com
-Description: Extends WooCommerce by Adding the Monero Gateway
-Version: 2.0
-Author: SerHack
+Description: Extends WooCommerce by Adding the Monero Payment Gateway
+Version: 2.1.1
+Author: Monero Integrations Team
 Author URI: https://monerointegrations.com
 */
 
@@ -56,7 +56,7 @@ function monero_create_menu()
         'manage_options',
         'admin.php?page=wc-settings&tab=checkout&section=monero_gateway',
         '',
-        plugins_url('monero/assets/monero_icon.png'),
+        plugins_url('assets/monero_icon.png'),
         56 // Position on menu, woocommerce has 55.5, products has 55.6
 
     );

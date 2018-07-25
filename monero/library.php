@@ -220,7 +220,7 @@ class Monero_Library
     }
 
     /* 
-     * The following functions can all be called to interact with the Monero RPC wallet
+     * The following functions can all be called to interact with the monero rpc wallet
      * They will majority of them will return the result as an array
      * Example: $daemon->address(); where $daemon is an instance of this class, will return the wallet address as string within an array
      */
@@ -266,7 +266,7 @@ class Monero_Library
     }
 
     /* A payment id can be passed as a string
-       A random payment id will be generated if one is not given */
+       A random payment id will be generatd if one is not given */
 
     public function split_integrated_address($integrated_address)
     {
@@ -322,26 +322,13 @@ class Monero_Library
     
 class NodeTools
 {
-    private $url;
-    public function __construct($testnet = false)
-    {
-      if(!testnet)
-      {
-        $this->url = 'https://xmrchain.net';
-      }
-      if(testnet)
-      {
-        $this->url = 'https://testnet.xmrchain.net';
-      }
-    }
-    
     public function get_last_block_height()
     {
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
                                        CURLOPT_RETURNTRANSFER => 1,
-                                       CURLOPT_URL => $this->url . 'api/networkinfo',
+                                       CURLOPT_URL => 'https://xmrchain.net/api/networkinfo',
                                        ));
         $resp = curl_exec($curl);
         curl_close($curl);
@@ -356,7 +343,7 @@ class NodeTools
         
         curl_setopt_array($curl, array(
                                        CURLOPT_RETURNTRANSFER => 1,
-                                       CURLOPT_URL => $this->url . '/api/search/' . $height,
+                                       CURLOPT_URL => 'https://xmrchain.net/api/search/' . $height,
                                        ));
         $resp = curl_exec($curl);
         curl_close($curl);
@@ -366,41 +353,12 @@ class NodeTools
         return $array['data']['txs'];
     }
     
-    public function get_outputs($address, $viewkey, $zero_conf = false)
-    {
-        $curl = curl_init();
-        
-        if(!$zero_conf)
-        {
-            curl_setopt_array($curl, array(
-                                           CURLOPT_RETURNTRANSFER => 1,
-                                           CURLOPT_URL => $this->url . '/api/outputsblocks?address=' . $address . '&viewkey=' . $viewkey . '&limit=5&mempool=0',
-                                           ));
-        }
-        
-        // also look in mempool if accepting zero confirmation transactions
-        if($zero_conf)
-        {
-            curl_setopt_array($curl, array(
-                                           CURLOPT_RETURNTRANSFER => 1,
-                                           CURLOPT_URL => $this->url . '/api/outputsblocks?address=' . $address . '&viewkey=' . $viewkey . '&limit=5&mempool=1',
-                                           ));
-        }
-        
-        $resp = curl_exec($curl);
-        curl_close($curl);
-        
-        $array = json_decode($resp, true);
-        
-        return $array['data']['outputs'];
-    }
-    
     public function check_tx($tx_hash, $address, $viewKey)
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
                                        CURLOPT_RETURNTRANSFER => 1,
-                                       CURLOPT_URL => $this-url . '/api/outputs?txhash=' .$tx_hash . '&address='. $address . '&viewkey='. $viewKey .'&txprove=0',
+                                       CURLOPT_URL => 'https://xmrchain.net/api/outputs?txhash=' .$tx_hash . '&address='. $address . '&viewkey='. $viewKey .'&txprove=0',
                                        ));
         $resp = curl_exec($curl);
         curl_close($curl);
@@ -425,7 +383,7 @@ class NodeTools
         
         curl_setopt_array($curl, array(
                                        CURLOPT_RETURNTRANSFER => 1,
-                                       CURLOPT_URL => $this->url . '/api/mempool',
+                                       CURLOPT_URL => 'https://xmrchain.net/api/mempool',
                                        ));
         $resp = curl_exec($curl);
         curl_close($curl);
